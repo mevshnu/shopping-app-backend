@@ -17,6 +17,12 @@ public class Shopcontroller {
     @Autowired
     private Productdao dao;
     private Userdao daos;
+    @CrossOrigin(origins = "*")
+    @GetMapping("/")
+    public String HomePage(){
+        return "Welcome to Shopping Cart";
+    }
+
 
     @CrossOrigin(origins = "*")
     @GetMapping("/view")
@@ -64,15 +70,6 @@ public class Shopcontroller {
         return st;
     }
 
-    @CrossOrigin(origins = "*")
-    @PostMapping(path = "/addProducts", produces = "application/json", consumes = "application/json")
-    public HashMap<String, String> AddProduct(@RequestBody Shop pm) {
-        dao.save(pm);
-        HashMap<String, String> st = new HashMap<>();
-        st.put("status", "success");
-        st.put("message", "product added successfully");
-        return st;
-    }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/fetchProducts")
