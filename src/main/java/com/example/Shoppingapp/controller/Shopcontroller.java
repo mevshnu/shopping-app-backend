@@ -17,11 +17,6 @@ public class Shopcontroller {
     @Autowired
     private Productdao dao;
     private Userdao daos;
-    @CrossOrigin(origins = "*")
-    @GetMapping("/")
-    public String HomePage(){
-        return "Welcome to Shopping Cart";
-    }
 
 
     @CrossOrigin(origins = "*")
@@ -54,31 +49,21 @@ public class Shopcontroller {
 
     @CrossOrigin(origins = "*")
     @PostMapping(path = "/userRegistration", consumes = "application/json", produces = "application/json")
-    public HashMap<String, String> UserRegistration(@RequestBody User um) {
-        System.out.println(um);
-        List<User> result = (List<User>) daos.FindUserLogin(um.getEmail());
-        System.out.println(result);
-        HashMap<String, String> st = new HashMap<>();
-        if (result.size() != 0) {
-            st.put("status", "success");
-            st.put("message", "user already exists");
-        } else {
-            daos.save(um);
-            st.put("status", "success");
-            st.put("message", "user added successfully");
-        }
-        return st;
-    }
-
-
-    @CrossOrigin(origins = "*")
-    @GetMapping("/fetchProducts")
-    public List<Shop> FetchProducts() {
-        return (List<Shop>) dao.findAll();
+    public HashMap<String, String> UserRegistration(@RequestBody User us) {
+        System.out.println(us.getName().toString());
+        System.out.println(us.getAddress().toString());
+        System.out.println(us.getMobile().toString());
+        System.out.println(us.getEmail().toString());
+        System.out.println(us.getPassword().toString());
+        System.out.println(us.getCpassword().toString());
+        daos.save(us);
+        HashMap<String, String> map = new HashMap<>();
+        map.put("status", "success");
+        return map;
     }
 
     @CrossOrigin(origins = "*")
-    @PostMapping(path = "/userLogin", produces = "application/json", consumes = "application/json")
+    @PostMapping(path = "/userlogin", produces = "application/json", consumes = "application/json")
     public HashMap<String, String> UserLogin(@RequestBody User um) {
         System.out.println(um.getEmail());
         List<User> result = (List<User>) daos.FindUserLogin(um.getEmail());
